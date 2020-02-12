@@ -1,11 +1,11 @@
 #!/bin/bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-JAR=restart-test-jar-with-dependencies.jar
+JAR="jvm-unix-restart-jar-with-dependencies.jar"
 
 function test_with_docker() {
   IMAGE="${1}"
 
-  if docker run --rm -t -v "${DIR}/target:/app" -w "/app" "${IMAGE}" java -jar restart-test-jar-with-dependencies.jar ; then
+  if docker run --rm -t -v "${DIR}/target:/app" -w "/app" "${IMAGE}" java -jar "${JAR}" ; then
     echo "... ${IMAGE} works as expected"
   else
     echo "... ${IMAGE} has failed"
@@ -13,7 +13,7 @@ function test_with_docker() {
 }
 
 function test_local() {
-  if java -jar "${DIR}/target/restart-test-jar-with-dependencies.jar" ; then
+  if java -jar "${DIR}/target/${JAR}" ; then
     echo "... local machine works as expected"
   else
     echo "... local machine failed"
